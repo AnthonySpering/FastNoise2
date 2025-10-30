@@ -14,6 +14,7 @@
 #include "MeshNoisePreview.h"
 
 using namespace Magnum;
+constexpr int MAX_CHUNK_DISTANCE = 10; // or whatever range you want
 
 MeshNoisePreview::MeshNoisePreview()
 {
@@ -245,6 +246,10 @@ void MeshNoisePreview::UpdateChunkQueues( const Vector3& position )
 
 void MeshNoisePreview::UpdateChunksForPosition( Vector3 position )
 {
+    if(etes)
+    {
+        return;
+    }
     //StartTimer();
     int chunkRange = (int)ceilf( mLoadRange / Chunk::SIZE );
 
@@ -291,6 +296,7 @@ void MeshNoisePreview::UpdateChunksForPosition( Vector3 position )
                     !mRegisteredChunkPositions.contains( chunkPos ) )
                 {
                     chunkPositions.push_back( chunkPos );
+                    etes = true;
                 }
             }
         }
